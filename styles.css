@@ -74,19 +74,25 @@ html, body { margin:0; padding:0; color:var(--fg); background:var(--bg); font:16
 .container { max-width:860px; margin:0 auto; padding:20px; }
 .hero { padding:40px 0 16px; }
 .hero h1 { font-size:2rem; margin:0 0 10px; }
-.lead { color:var(--muted); max-width:60ch; }
+.lead { color:var(--muted); max-width:80ch; }
+.sublead { color: var(--muted); margin-top: 1rem; max-width: 80ch }
+.principles-inline { margin-top: 1.5rem; font-size: 0.95rem; color: var(--muted); }
+.principles-inline strong { color: var(--fg); }
 .cta-row { margin-top:16px; display:flex; gap:10px; }
 
 h2 { margin-top:32px; }
 #services .cards { list-style:none; padding:0; display:grid; grid-template-columns:1fr; gap:12px; }
 @media (min-width: 720px) { #services .cards { grid-template-columns: repeat(2, 1fr); } }
-/*#services .card { border:1px solid var(--border); border-radius:12px; padding:16px; background: var(--bg); box-shadow: 0 2px 4px rgba(0,0,0,0.00); transition: transform 0.15s ease, box-shadow 0.15s ease, boarder-color 0.15s ease;}
-#services .card:hover { transform: translateY(-3px); box-shadow: 0 6px 14px rgba(0,0,0,0.12); border-color: var(--link); }*/
+
+/* Card background variable (light/dark aware) */
+:root { --card-bg: #f5f3ff; }                 /* pale purple (light) */
+:root[data-theme="dark"] { --card-bg: #1a152a; } /* deep muted purple (dark) */
+
 #services .card {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 20px;
-  background: #f5f3ff; /* pale Ethereum-ish purple */
+  background: var(--card-bg);
   box-shadow: 0 2px 4px rgba(0,0,0,0.06);
   transition: transform 0.15s ease,
               box-shadow 0.15s ease,
@@ -98,7 +104,11 @@ h2 { margin-top:32px; }
   transform: translateY(-3px);
   box-shadow: 0 6px 14px rgba(0,0,0,0.12);
   border-color: var(--link);
-  background: #ede9fe; /* slightly deeper purple on hover */
+  /* subtle hover tint for both themes */
+  background: color-mix(in oklab, var(--card-bg) 92%, white);
+}
+:root[data-theme="dark"] #services .card:hover {
+  background: color-mix(in oklab, var(--card-bg) 85%, black);
 }
 
 #services .card h3 { margin: 0 0 10px; font-size: 1.1rem; border-bottom: 2px solid var(--border); }
@@ -131,6 +141,13 @@ h2 { margin-top:32px; }
   }
 }
 
+.principle-tag {
+  font-size: 0.9em;
+  opacity: 0.85;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
 .highlights {
   margin-top: 24px;
   padding: 0;
@@ -156,4 +173,30 @@ h2 { margin-top:32px; }
 
 .feature-list li::before {
   content: none;          /* kill the custom dot you had before */
+}
+
+/* Tighten section spacing and headings */
+section { margin-top: 28px; }
+.hero { padding: 40px 0 12px; }
+h2 { margin: 28px 0 8px; font-size: 1.35rem; }
+h3 { margin: 0 0 8px; }
+
+/* Improve bullet readability + optional two-column on wide screens */
+.feature-list { margin: 0.2rem 0 0; }
+.feature-list li { margin: 8px 0; line-height: 1.6; }
+@media (min-width: 900px) {
+  .highlights .feature-list { 
+    columns: 1; 
+    column-gap: 36px; 
+  }
+  .highlights .feature-list li { break-inside: avoid; }
+}
+
+/* Muted helper and CTA block */
+.muted { color: var(--muted); }
+.cta {
+  padding: 18px;
+  margin-top: 24px;
+  background: linear-gradient(0deg, transparent, transparent),
+              var(--bg);
 }
